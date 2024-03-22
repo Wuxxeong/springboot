@@ -41,18 +41,18 @@ public class TokenProvider {
                 .compact();
     }
 
-    public boolean validToken(String token) {
+    public boolean validToken(String token) { //유효성 검증
         try {
             Jwts.parser()
-                    .setSigningKey(jwtProperties.getSecretKey())
-                    .parseClaimsJws(token);
+                    .setSigningKey(jwtProperties.getSecretKey()) //서명 검증에 사용될 비밀키 설정
+                    .parseClaimsJws(token); //서명을 검증
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public Authentication getAuthentication(String token) {
+    public Authentication getAuthentication(String token) { //인증정보 추출
         Claims claims = getClaims(token);
         Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
 
